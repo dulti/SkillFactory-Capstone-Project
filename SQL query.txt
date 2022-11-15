@@ -1,0 +1,14 @@
+/*
+Выгружаем полное объединение обеих таблиц. Таблицы объединены по ID корзины.
+Далее оставляем только записи, где State = ‘successful’ (покупка успешно совершена) и resource_type = ‘Course’ (куплен курс, а не продукт).
+Оставляем только столбцы user_id и resource_id для дальнейшего анализа.
+Выгружаем таблицу.
+*/
+with all_tables as 
+(select * from final.carts
+full join final.cart_items
+on carts.id = cart_items.cart_id
+where carts.state = 'successful' and resource_type = 'Course')
+select user_id, resource_id
+from all_tables
+
